@@ -1,0 +1,24 @@
+{
+  "name": "proyecto-mysql",
+  "version": "1.0.0",
+  "description": "Prueba de pruebas con mysql",
+  "main": "gulpfile.js",
+  "keywords": [
+    "rafaelgp87",
+    "javascript",
+    "mysql"
+  ],
+  "author": "rafaelgp87",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "body-parser": "^1.18.3",
+    "mysql": "^2.16.0",
+    "nodemailer": "^4.6.7",
+    "pug": "^2.0.3",
+    "serve-favicon": "^2.5.0"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  }
+}

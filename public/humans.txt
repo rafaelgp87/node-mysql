@@ -1,0 +1,12 @@
+/* TEAM */
+Developer: Rafael Gutiérrez
+Contact: rafaelgp87@gmail.com
+Twitter: @rafaelgp87
+Location: México City, México
+
+
+/* SITE */
+Last update: 2018/01/18
+Standards: HTML5, CSS3, JS
+Components: Node JS, Express, Pug, MySql
+Software: Visual Studio Code, Chrome, Windows 8, MacOS
