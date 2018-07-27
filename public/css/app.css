@@ -8,84 +8,124 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body, html {
+html {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
-  font-size: 14px;
   -webkit-font-smoothing: antialiased;
-
 }
 
-.grid-container {
-  height: auto;
-  width: auto;
+.container {
   display: grid;
-  grid-gap: 0.5em;
-  grid-template-rows: 10% auto 10%;
-  grid-template-columns: auto 60% auto;
+
   grid-template-areas:
     "header header header"
-    ". content ."
+    "nav content side"
     "footer footer footer";
-  background: #8360c3;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #2ebf91, #8360c3);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #2ebf91, #8360c3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  margin: 0px;
+
+  grid-template-columns: 200px 1fr 200px;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 1px;
+
+  height: 100vh;
 }
 
 header {
   grid-area: header;
+  background:#2ebf91;
+  padding: 0.5em;
 }
 
-.menu{
-  height: 40px;
-  background:rgba(0, 0, 0, 0.5);
+nav {
+  grid-area: nav;
+  margin-left: 1px;
   display: flex;
-  flex-wrap:wrap;
+  flex-flow: column;
+  background: #8360c3;
+  background: -webkit-linear-gradient(to bottom, #2ebf91, #8360c3);
+  background: linear-gradient(to bottom, #2ebf91, #8360c3);
 }
 
-.menu-item {
-  font-weight:600;
-  height: 100%;
-  margin-left: 0.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.menu-item a {
-  text-decoration: none;
-}
-
-.menu-item-text {
-  color:#ffffff;
-  padding: 1em;
-}
-
-.menu-item:hover {
-  background:rgba(0,0,0,0.3);
-}
-
-.container {
+main {
   grid-area: content;
+  background: #8360c3;
+  background: -webkit-linear-gradient(to bottom, #2ebf91, #8360c3);
+  background: linear-gradient(to bottom, #2ebf91, #8360c3);
+}
+
+aside {
+  grid-area: side;
+  margin-right: 1px;
+  background: #8360c3;
+  background: -webkit-linear-gradient(to bottom, #2ebf91, #8360c3);
+  background: linear-gradient(to bottom, #2ebf91, #8360c3);
 }
 
 footer {
   grid-area: footer;
-  background:rgba(0,0,0,0.5);
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
+  color: rgb(214, 211, 211);
+  background: -webkit-linear-gradient(to bottom,  #8360c3, rgba(0, 0, 0, 0.9));
+  background: linear-gradient(to bottom, #8360c3, rgba(0, 0, 0, 0.9));
+  padding: 0.5em;
   text-align: center;
 }
 
-footer p {
+@media (max-width: 768px) {
+  .container {
+    grid-template-areas:
+      "header"
+      "nav"
+      "content"
+      "side"
+      "footer";
+
+    grid-template-columns: 1fr;
+    grid-template-rows:
+      auto /* Header */
+      minmax(3em, auto) /* Nav */
+      1fr /* Content */
+      auto /* Sidebar */
+      auto; /* Footer */
+  }
+
+  header {
+    display: none;
+  }
+
+  nav {
+    background:#2ebf91;
+    margin-left: 0;
+    position: fixed;
+    height: 3em;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  aside {
+    display: none;
+  }
+
+  .nav-item {
+    height: 100%;
+  }
+}
+
+.nav-item {
+  margin: 0.2em;
+  padding: 0.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background:rgba(0,0,0,0.5);
   color: rgb(214, 211, 211);
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background:rgba(0,0,0,0.3);
 }
 
 /* otros estilos */
-
 #email-usuario-error,
 #email-nuevo-error,
 .required {
@@ -97,17 +137,22 @@ footer p {
   color: green;
 }
 
-.formulario-login {
+.formularios {
+  display: block;
+}
+
+.formulario {
+  width: 100%;
   background:rgba(0,0,0,0.5);
   color: rgb(214, 211, 211);
   text-align: center;
-  display: inline-block;
+  display: block;
   padding: 1em;
+  margin-top: 0.5em;
 }
 
-.formulario-login, div {
-  margin-bottom: 0.5em;
-  margin-left: 0px;
+.formulario div {
+  margin: 1em;
 }
 
 #reenviar-password {

@@ -1,49 +1,49 @@
 extends index.pug
 
 block content
+  div(class="formularios")
+    div(class="formulario")
+      div
+        p Iniciar Sesión
+        p(id="email-usuario-error")
+        p(id="email-usuario-mensaje")
+      div
+        input(id="email-usuario", placeholder="Usuario", type="text")
+      div
+        input(id="referencia", placeholder="Contraseña", type="password")
+      div(id="login-usuario", class="button") Entrar
+      div(id="reenviar-password", class="button") ¿Reenviar Contraseña?
 
-  .formulario-login
-    div
-      p Iniciar Sesión
-      p(id="email-usuario-error")
-      p(id="email-usuario-mensaje")
-    div
-      input(id="email-usuario", placeholder='Usuario', type='text')
-    div
-      input(id="referencia", placeholder='Contraseña', type='password')
-    div(id="login-usuario", class="button") Entrar
-    div(id="reenviar-password", class="button") ¿Reenviar Contraseña?
-
-  .formulario-login
-    div
-      p Registrarse
-      p(id="email-nuevo-error")
-      p(id="email-nuevo-mensaje")
-    div
-      input(id="email-nuevo", placeholder='email', type='text' required)
-    div
-      input(id="referencia2", placeholder='Contraseña', type='password' required)
-    div
-      input(id="referencia3", placeholder='Verificar contraseña', type='password' required)
-    div
-      p Datos no necesarios:
-    div
-      input(id="nombres", placeholder='Nombres', type='text')
-    div
-      input(id="apellidos", placeholder='Apellidos', type='text')
-    div
-      p Genero:
-    div
-      select(id="genero")
-        option(value='')
-        option(value='Femenino') Femenino
-        option(value='Masculino') Masculino
-        option(value='Otro') Otro
-        option(value='Indefinido') Indefinido
-    div
-      p Fecha de nacimiento:
-    div
-      input(id="fecha-nacimiento", placeholder='Fecha de nacimiento', type='date')
-    div(id="registrarse", class="button") Registrarse
+    div(class="formulario")
+      div
+        p Registrarse
+        p(id="email-nuevo-error")
+        p(id="email-nuevo-mensaje")
+      div
+        input(id="email-nuevo", placeholder="email", type="text" required)
+      div
+        input(id="referencia2", placeholder="Contraseña", type="password" required)
+      div
+        input(id="referencia3", placeholder="Verificar contraseña", type="password" required)
+      div
+        p Datos no necesarios:
+      div
+        input(id="nombres", placeholder="Nombres", type="text")
+      div
+        input(id="apellidos", placeholder="Apellidos", type="text")
+      div
+        p Genero:
+      div
+        select(id="genero")
+          option(value="")
+          option(value="Femenino") Femenino
+          option(value="Masculino") Masculino
+          option(value="Otro") Otro
+          option(value="Indefinido") Indefinido
+      div
+        p Fecha de nacimiento:
+      div
+        input(id="fecha-nacimiento", placeholder="Fecha de nacimiento", type="date")
+      div(id="registrarse", class="button") Registrarse
 block scripts
-  script(type='application/javascript' src='js/login.js')
+  script(type="application/javascript" src="js/login.js")

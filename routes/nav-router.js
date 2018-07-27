@@ -9,5 +9,6 @@ router
   .get('/', nc.getHome)
   .get('/login', nc.getLogin)
   .get('/activar-cuenta/:cuenta', nc.getActivarCuenta, nc.getUrlActivarCuenta)
+  .use( nc.error404 )
 
 module.exports = router;

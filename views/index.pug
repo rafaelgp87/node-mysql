@@ -2,19 +2,18 @@ html
   head
     title=title
     meta(content='charset=UTF-8')
-    link(rel='stylesheet', href='css/app.css')
+    link(rel="stylesheet", href="css/app.css")
     block head
-  body(class="grid-container")
-    header
-      nav(class='menu')
-        .menu-item
-          a(href='/')
-            span(class="menu-item-text") Inicio
-        .menu-item
-          a(href='/login')
-            span(class="menu-item-text") login
-    .container
-      block content
-    footer
-      p rafaelgp87
+  body
+    div(class="container")
+      header
+        p App de pruebas con NodeJS y MySQL
+      nav
+        a(href="/", class="nav-item") Inicio
+        a(href="/login", class="nav-item") login
+      main
+        block content
+      aside
+      footer
+        p rafaelgp87
     block scripts
