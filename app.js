@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const routerUser = require('./routes/user-router.js')
+const routerList = require('./routes/list-router.js')
 const publicDir = express.static(`${__dirname}/public`)
 const port = (process.env.PORT || 3000)
 
@@ -15,5 +16,6 @@ app
   .use( bodyParser.urlencoded({ extended: false }) )
   .use( publicDir )
   .use( routerUser )
+  .use( routerList )
 
 module.exports = app;

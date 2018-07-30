@@ -5,6 +5,7 @@ const routes = [
   //{ path: '/listas', component: list },
   { path: '/login', component: login },
   { path: '/activar-cuenta/:id', component: activarCuenta },
+  { path: '/listas', component: listas },
 ];
 
 const router = new VueRouter({

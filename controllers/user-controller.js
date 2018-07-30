@@ -1,6 +1,8 @@
 'use strict'
 
-const conn = require('../models/model.js')
+const UserModel = require('../models/user-model.js')
+const um = new UserModel()
+
 const nodemailer = require('nodemailer')
 const e = require ('./email-conf.json')
 
@@ -16,27 +18,12 @@ const transporter = nodemailer.createTransport({
 class UserController {
 
   login(req, res, next) {
-    var requerido = new Buffer(req.body.referencia).toString('utf-8')
 
-    let query = `
-    select
-      BIN_TO_UUID(id) as id, 
-      fecha_registro, 
-      email, 
-      usuario, 
-      referencia, 
-      nombres, apellidos, genero, 
-      fecha_nacimiento, foto, token
-      from proyecto.usuarios 
-     from proyecto.usuarios 
-    where email = ? 
-      and referencia = ?;`
-    
-    let queryActivo = "select * from proyecto.usuarios where email = ? and referencia = ? and activo = 1;"
+    let values = [req.body.email, req.body.referencia]
 
-    conn.query(query, [req.body.email, requerido], function (err, rows) {
+    um.getUserByEmailPass(values, (err, rows) => {
       if (err) {
-        console.log('***** Error en la consulta *****')
+        console.log('***** Error getUserByEmailPass *****')
         console.log(err)
         console.log('********************************')
         res.json({
@@ -45,10 +32,14 @@ class UserController {
         })
 
       } else {
+        console.log('***** Resultado getUserByEmailPass *****')
         console.log(rows)
+        console.log('************************************')
 
         if(rows[0] == undefined) {
-          res.json("Datos incorrectos")
+          res.json({
+            mensaje : "Datos incorrectos"
+          })
 
         } else {
           res.json(rows[0])
@@ -59,52 +50,44 @@ class UserController {
 
   registrarse(req, res, next) {
 
-    let query = "select * from proyecto.usuarios where email = ?;"
+    let values = [req.body.email]
 
-    conn.query(query, [req.body.email], function (err, rows) {
-      if(err) {
-        console.log('Error en la consulta')
-            res.json({
-              code : 100,
-              mensaje : "Error en la consulta"
-            })
+    um.getUserByEmail(values, (err, rows) => {
+      if (err) {
+        console.log('***** Error getUserByEmail*****')
+        console.log(err)
+        console.log('********************************')
+        res.json({
+          code : 100,
+          mensaje : "Error en la consulta"
+        })
 
       } else {
-        if (rows.length > 0) {
-          res.json({
-            mensaje: "El email seleccionado ya esta registrado"
-          })
+        console.log('***** Resultado getUserByEmail *****')
+        console.log(rows)
+        console.log(rows.length)
+        console.log('************************************')
 
-        } else {
+        if(rows.length == 0) {
 
-          let queryRegistro = `
-            insert into proyecto.usuarios 
-            (id, fecha_registro, email, usuario, referencia, nombres, apellidos, genero, fecha_nacimiento, foto, token, activo)
-            values 
-            (UUID_TO_BIN(UUID()), now(), ?, null, ?, ?, ?, ?, ?, null, null, false); 
-          `
+          let values2 = [req.body.email, req.body.referencia, req.body.nombres, req.body.apellidos, req.body.genero, req.body.fecha_nacimiento]
 
-          conn.query(queryRegistro,
-          [req.body.email, req.body.referencia, req.body.nombres, req.body.apellidos, req.body.genero, req.body.fecha_nacimiento], function(err, rows) {
-
+          um.insertUser(values2, (err, rows) => {
             if (err) {
-              console.log('***** Error en la consulta *****')
+              console.log('***** Error insertUser *****')
               console.log(err)
               console.log('********************************')
-
               res.json({
                 code : 100,
                 mensaje : "Error en la consulta"
               })
 
             } else {
+              console.log('***** Resultado insertUser *****')
+              console.log(rows)
+              console.log('************************************')
 
-              let queryID = `
-                select BIN_TO_UUID(id) as id from proyecto.usuarios where email = ?;
-              `
-
-              conn.query(queryID, [req.body.email] , function (err, rows) {
-
+              um.getUserIdByEmail(values, (err, rows) => {
                 if (err) {
                   console.log('***** Error en la consulta *****')
                   console.log(err)
@@ -120,6 +103,10 @@ class UserController {
               })
             }
           })
+        } else {
+          res.json({
+            mensaje : "Ya existe un usuario con el email seleccionado"
+          })
         }
       }
     })
@@ -127,23 +114,23 @@ class UserController {
 
   reenviarPassword(req, res, next) {
 
-    let query = 'select referencia from proyecto.usuarios where email = ? and activo = 1;'
+    let values = [req.body.email]
 
-    conn.query(query, [req.body.email], function(err, rows) {
-
+    um.getUserPassByEmail(values, (err, rows) => {
       if (err) {
-        console.log('***** Error en la consulta *****')
+        console.log('***** Error getUserPassByEmail *****')
         console.log(err)
         console.log('********************************')
         res.json({
-          code : 100, 
+          code : 100,
           mensaje : "Error en la consulta"
         })
 
       } else {
-
         if (rows.length == 0) {
-          res.json('Datos incorrectos')
+          res.json({
+            mensaje : "Datos incorrectos"
+          })
 
         } else {
           var mailOptions = {
@@ -154,7 +141,7 @@ class UserController {
 
           transporter.sendMail(mailOptions, function(err, info) {
             if (err) {
-              console.log('***** Error en la consulta *****')
+              console.log('***** Error sendMail *****')
               console.log(err)
               console.log('********************************')
 
@@ -162,7 +149,9 @@ class UserController {
                 mensaje : "Error"
               })
             } else {
-              res.json("Ok")
+              res.json({
+                mensaje : "Ok"
+              })
             }
           })
         }
@@ -172,51 +161,50 @@ class UserController {
 
   activarCuenta(req, res, next) {
 
-      conn.query("select * from proyecto.usuarios where id = UUID_TO_BIN(?);", [req.body.id], function(err, rows) {
+    let values = [req.body.id]
 
-        if (err) {
-          console.log('***** Error en la consulta *****')
-          console.log(err)
-          console.log('********************************')
+    um.getUserById(values, (err, rows) => {
+      if (err) {
+        console.log('***** Error getUserById *****')
+        console.log(err)
+        console.log('********************************')
 
+        res.json({
+          code : 100,
+          status : "Error en la consulta",
+          mensaje : "Esta cuenta no pudo ser activada"
+        })
+
+      } else {
+
+        if (rows.length == 0) {
           res.json({
-            code : 100, 
-            status : "Error en la consulta",
-            mensaje : "Esta cuenta no pudo ser activada"
+            mensaje : `Esta cuenta no puede ser activada, contacte al administrador`
           })
-
         } else {
 
-          if (rows.length > 0) {
-            
-            let query = "update proyecto.usuarios set activo = true where id = UUID_TO_BIN(?);"
+          um.updateUserActiveById(values, (err, rows) => {
+            if(err) {
+              console.log('***** Error updateUserActiveById *****')
+              console.log(err)
+              console.log('********************************')
 
-            conn.query(query, [req.body.id], function(err, rows){
-              if(err) {
-                console.log('***** Error en la consulta *****')
-                console.log(err)
-                console.log('********************************')
+              res.json({
+                code : 100,
+                mensaje : "Error en la consulta"
+              })
 
-                res.json({
-                  code : 100, 
-                  mensaje : "Error en la consulta"
-                })
-
-              } else {
-                res.json({
-                  mensaje : `Su cuenta ha sido activada :)`
-                })
-              }
-            })
-
-          } else {
-            res.json({
-              mensaje : `Esta cuenta no puede ser activada, contacte al administrador`
-            })
-          }
+            } else {
+              res.json({
+                mensaje : `Su cuenta ha sido activada :)`
+              })
+            }
+          })
         }
-      })
+      }
+    })
   }
+
 }
 
 module.exports = UserController
@@ -233,12 +221,18 @@ function enviarCorreoActivacion (idUsuario, req, res) {
   transporter.sendMail(mailOptions, function(error, info) {
     if(error){
       console.log(error)
-      res.json({mensaje:'No se pudo enviar el email de activación'})
+
+      res.json({
+        mensaje:'No se pudo enviar el email de activación'
+      })
     }else{
-      res.json({mensaje:'Registro realizado'})
       console.log('***** Se envío el email *****')
       console.log(mailOptions)
       console.log('*****************************')
+
+      res.json({
+        mensaje : 'Registro realizado'
+      })
     }
   })
 }

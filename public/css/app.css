@@ -31,17 +31,32 @@ html {
 header {
   grid-area: header;
   background:#2ebf91;
+}
+
+.header {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: rgb(214, 211, 211);
   padding: 0.5em;
 }
 
 nav {
   grid-area: nav;
-  margin-left: 1px;
-  display: flex;
-  flex-flow: column;
   background: #8360c3;
   background: -webkit-linear-gradient(to bottom, #2ebf91, #8360c3);
   background: linear-gradient(to bottom, #2ebf91, #8360c3);
+}
+
+.nav {
+  height: 100%;
+  width: 100%;
+  margin-left: 1px;
+  display: flex;
+  flex-flow: column;
+  /*background: rgba(0, 0, 0, 0.5);*/
+  color: rgb(214, 211, 211);
+  padding: 0.5em;
 }
 
 .main {
@@ -61,9 +76,14 @@ aside {
 
 footer {
   grid-area: footer;
+  background: #8360c3;
+}
+
+.footer {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
   color: rgb(214, 211, 211);
-  background: -webkit-linear-gradient(to bottom,  #8360c3, rgba(0, 0, 0, 0.9));
-  background: linear-gradient(to bottom, #8360c3, rgba(0, 0, 0, 0.9));
   padding: 0.5em;
   text-align: center;
 }
@@ -92,6 +112,10 @@ footer {
 
   nav {
     background:#2ebf91;
+  }
+
+  .nav {
+    background: rgba(0, 0, 0, 0.5);
     margin-left: 0;
     position: fixed;
     height: 3em;

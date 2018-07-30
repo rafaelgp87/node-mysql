@@ -15,7 +15,7 @@ const login = Vue.component('login', {
         <div>
           <input v-model="passLogin" placeholder="Contraseña" type="password" />
         </div>
-        <div class="button" v-on:click="loginUsuario">Entrar</div>
+        <div class="button" v-on:click="loginEmail">Entrar</div>
         <div class="button" v-on:click="reenviarPassword">¿Reenviar Contraseña?</div>
       </div>
 
@@ -86,7 +86,7 @@ const login = Vue.component('login', {
     }
   },
   methods: {
-    loginUsuario: function () {
+    loginEmail: function () {
 
       if (/\S+@\S+\.\S+/.test(this.emailLogin) != true) {
         this.loginError = 'El formato de email no es correcto'
@@ -100,7 +100,7 @@ const login = Vue.component('login', {
           body: JSON.stringify({
             email: this.emailLogin,
             referencia: this.passLogin
-          }), 
+          }),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -109,17 +109,18 @@ const login = Vue.component('login', {
         ).then(response => {
 
           if (response) {
-            console.log('Success:', response)
+            //console.log('Success:', response)
 
-            if (response == 'Datos incorrectos') {
-              this.loginError = response
-            
+            if (response.mensaje == 'Datos incorrectos') {
+              this.loginError = response.mensaje
+
             } else {
-              localStorage.setItem('id', response.id)
-              localStorage.setItem('email', response.email)
+
+              localStorage.setItem('userId', response.id)
+              localStorage.setItem('userEmail', response.email)
             }
           }
-          
+
         }).catch(error => {
           if (error) {
             this.loginError = 'No hay acceso al sistema, contacte al administrador'
@@ -151,7 +152,7 @@ const login = Vue.component('login', {
             apellidos: this.apellidos,
             genero: this.genero,
             fecha_nacimiento: this.fechaNacimiento
-          }), 
+          }),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -166,7 +167,7 @@ const login = Vue.component('login', {
             this.registroMensaje = `Se envió un email al email ${this.emailRegistro} para activar su cuenta`
 
           }
-          
+
         }).catch(error => {
           if (error) {
             console.log(error)
@@ -186,7 +187,7 @@ const login = Vue.component('login', {
           method: 'POST',
           body: JSON.stringify({
             email: this.emailLogin
-          }), 
+          }),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -194,7 +195,7 @@ const login = Vue.component('login', {
           res => res.json()
         ).then(response => {
 
-          if(response == 'Ok') {
+          if(response.mensaje == 'Ok') {
             this.loginMensaje = `Se envió su contraseña al correo  ${this.emailLogin}
             Te hemos enviado un correo electrónico con las instrucciones para cambiar tu contraseña, si existe una cuenta asociada recibirás un correo electrónico en los siguientes minutos.
             Si no recibes ningún correo electrónico, por favor verifica que el correo electrónico sea el que corresponde a tu cuenta, también checa tu carpeta de spam.
@@ -202,7 +203,7 @@ const login = Vue.component('login', {
           } else {
             this.loginError = 'Ocurrio un error al envíarle su contraseña, intentelo de nuevo más tarde'
           }
-          
+
         }).catch(error => {
           if (error) {
             console.log(error)
@@ -214,6 +215,6 @@ const login = Vue.component('login', {
   },
   // Antes de renderear el template
   created: function () {
-  
+
   }
 });

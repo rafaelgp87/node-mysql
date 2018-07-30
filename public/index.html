@@ -11,21 +11,29 @@
   <script defer src="app/components/home.js"></script>
   <script defer src="app/components/login.js"></script>
   <script defer src="app/components/activar-cuenta.js"></script>
+  <script defer src="app/components/listas.js"></script>
   <script defer src="app/app.js"></script>
 </head>
 <body>
   <div id="app" class="container">
     <header>
-      <p>App de pruebas con NodeJS y MySQL</p>
+      <div class="header">
+          <p>App de pruebas con NodeJS y MySQL</p>
+      </div>
     </header>
     <nav>
-      <router-link class="nav-item" to="/">inicio</router-link>
-      <router-link class="nav-item" to="/login">login</router-link>
+      <div class="nav">
+        <router-link class="nav-item" to="/">inicio</router-link>
+        <router-link class="nav-item" to="/listas">listas</router-link>
+        <router-link class="nav-item" to="/login">login</router-link>
+      </div>
     </nav>
     <router-view class="main"></router-view>
     <aside></aside>
     <footer>
-      <p>rafaelgp87</p>
+      <div class="footer">
+          <p>rafaelgp87</p>
+      </div>
     </footer>
   </div>
 </body>
