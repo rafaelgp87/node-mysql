@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node MySQL</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" type="text/css" href="css/app.css" />
+  <script defer src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script defer src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script defer src="app/components/home.js"></script>
+  <script defer src="app/components/login.js"></script>
+  <script defer src="app/components/activar-cuenta.js"></script>
+  <script defer src="app/app.js"></script>
+</head>
+<body>
+  <div id="app" class="container">
+    <header>
+      <p>App de pruebas con NodeJS y MySQL</p>
+    </header>
+    <nav>
+      <router-link class="nav-item" to="/">inicio</router-link>
+      <router-link class="nav-item" to="/login">login</router-link>
+    </nav>
+    <router-view class="main"></router-view>
+    <aside></aside>
+    <footer>
+      <p>rafaelgp87</p>
+    </footer>
+  </div>
+</body>
+</html>

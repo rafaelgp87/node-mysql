@@ -1,2 +1,3 @@
 node_modules
 controllers/email-conf.json
+models/db-conf.json

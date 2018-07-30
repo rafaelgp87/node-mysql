@@ -1,31 +1,37 @@
 CREATE DATABASE IF NOT EXISTS proyecto;
 SET default_storage_engine = INNODB;
 
-#drop table if exists proyecto.usuarios
-
 create table if not exists proyecto.usuarios(
-	id                serial primary key,
-    email             varchar(255),
-	usuario           varchar(255) null,
-	referencia        varchar(255),
-	nombres           varchar(255) null,
-    apellidos         varchar(255) null,
-	genero        	  varchar(20) null,
+	num serial,
+	id binary(16),
+    fecha_registro datetime,
+    email varchar(255),
+	usuario varchar(255) null,
+	referencia varchar(255),
+	nombres varchar(255) null,
+    apellidos varchar(255) null,
+	genero varchar(20) null,
 	fecha_nacimiento  date null,
-	foto              varchar(255) null,
-	token             varchar(30) null,
-	activo            boolean null,
-	licencia          varchar(50) null
-) engine=InnoDB;
+	foto varchar(255) null,
+	token varchar(30) null,
+	activo boolean null,
+    PRIMARY KEY (id),
+    INDEX num_user (num)
+) engine = InnoDB;
 
 /*
-insert into proyecto.usuarios
-       (usuario, referencia,  nombres,  apellidos,                 email,      genero, fecha_nacimiento, foto, token, activo,            licencia)
-values ( 'rafa',    '入ります', 'Rafael','Gutierrez','rafaelgp87@gmail.com', 'Masculino',     '1987-08-06', null,  null,   true,'licencia de prueba')
-select * from proyecto.usuarios
+select 
+num,
+BIN_TO_UUID(id), 
+fecha_registro, 
+email, 
+usuario, 
+referencia, 
+nombres, apellidos, genero, 
+fecha_nacimiento, foto, token, activo
+from proyecto.usuarios
 
-select * from proyecto.usuarios where email = 'rafaelgp87@gmail.com' and referencia = 'cisco' and activo = 1;
-delete from proyecto.usuarios where id = 6
+drop table if exists proyecto.usuarios
 */
 
 #drop table profesores.teacher;

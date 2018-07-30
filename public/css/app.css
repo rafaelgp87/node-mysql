@@ -44,7 +44,7 @@ nav {
   background: linear-gradient(to bottom, #2ebf91, #8360c3);
 }
 
-main {
+.main {
   grid-area: content;
   background: #8360c3;
   background: -webkit-linear-gradient(to bottom, #2ebf91, #8360c3);
@@ -126,14 +126,12 @@ footer {
 }
 
 /* otros estilos */
-#email-usuario-error,
-#email-nuevo-error,
+.error,
 .required {
   color: red;
 }
 
-#email-nuevo-mensaje,
-#email-usuario-mensaje {
+.mensaje {
   color: green;
 }
 
