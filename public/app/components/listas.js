@@ -18,7 +18,7 @@ const listas = Vue.component('listas', {
     }
   },
   // Antes de renderear el template
-  mounted: function () {
+  created: function () {
 
     fetch('/get-list', {
       method: 'POST',

@@ -55,7 +55,7 @@ create table if not exists proyecto.listas (
 
 /*
 insert into proyecto.listas (id, id_user, fecha_registro, nombre)
-values (UUID_TO_BIN(UUID()), UUID_TO_BIN('52e43aa7-943c-11e8-a6df-94de801ecc15'), now(), 'Lista de pruebas');
+values (UUID_TO_BIN(UUID()), UUID_TO_BIN('5b859712-9465-11e8-adc0-2ccd7f17f68a'), now(), 'Lista de pruebas 5');
 
 select num, BIN_TO_UUID(id), BIN_TO_UUID(id_user), fecha_registro, nombre from proyecto.listas;
 */
