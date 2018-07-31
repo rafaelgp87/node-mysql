@@ -13,7 +13,7 @@ class ListController {
       if (err) {
         console.log('***** Error getUserByEmailPass *****')
         console.log(err)
-        console.log('********************************')
+
         res.json({
           code : 100,
           mensaje : "Error en la consulta"
@@ -22,7 +22,6 @@ class ListController {
       } else {
         console.log('***** Resultado getUserByEmailPass *****')
         console.log(rows)
-        console.log('************************************')
 
         res.json(rows)
       }

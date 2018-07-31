@@ -25,7 +25,6 @@ class UserController {
       if (err) {
         console.log('***** Error getUserByEmailPass *****')
         console.log(err)
-        console.log('********************************')
         res.json({
           code : 100,
           mensaje : "Error en la consulta"
@@ -34,7 +33,6 @@ class UserController {
       } else {
         console.log('***** Resultado getUserByEmailPass *****')
         console.log(rows)
-        console.log('************************************')
 
         if(rows[0] == undefined) {
           res.json({
@@ -56,7 +54,6 @@ class UserController {
       if (err) {
         console.log('***** Error getUserByEmail*****')
         console.log(err)
-        console.log('********************************')
         res.json({
           code : 100,
           mensaje : "Error en la consulta"
@@ -66,7 +63,6 @@ class UserController {
         console.log('***** Resultado getUserByEmail *****')
         console.log(rows)
         console.log(rows.length)
-        console.log('************************************')
 
         if(rows.length == 0) {
 
@@ -76,7 +72,7 @@ class UserController {
             if (err) {
               console.log('***** Error insertUser *****')
               console.log(err)
-              console.log('********************************')
+
               res.json({
                 code : 100,
                 mensaje : "Error en la consulta"
@@ -85,13 +81,12 @@ class UserController {
             } else {
               console.log('***** Resultado insertUser *****')
               console.log(rows)
-              console.log('************************************')
 
               um.getUserIdByEmail(values, (err, rows) => {
                 if (err) {
                   console.log('***** Error en la consulta *****')
                   console.log(err)
-                  console.log('********************************')
+
                   res.json({
                     code : 100,
                     mensaje : "Error en la consulta"
@@ -120,7 +115,7 @@ class UserController {
       if (err) {
         console.log('***** Error getUserPassByEmail *****')
         console.log(err)
-        console.log('********************************')
+
         res.json({
           code : 100,
           mensaje : "Error en la consulta"
@@ -143,7 +138,6 @@ class UserController {
             if (err) {
               console.log('***** Error sendMail *****')
               console.log(err)
-              console.log('********************************')
 
               res.json({
                 mensaje : "Error"
@@ -167,7 +161,6 @@ class UserController {
       if (err) {
         console.log('***** Error getUserById *****')
         console.log(err)
-        console.log('********************************')
 
         res.json({
           code : 100,
@@ -187,7 +180,6 @@ class UserController {
             if(err) {
               console.log('***** Error updateUserActiveById *****')
               console.log(err)
-              console.log('********************************')
 
               res.json({
                 code : 100,
@@ -228,7 +220,6 @@ function enviarCorreoActivacion (idUsuario, req, res) {
     }else{
       console.log('***** Se envío el email *****')
       console.log(mailOptions)
-      console.log('*****************************')
 
       res.json({
         mensaje : 'Registro realizado'
