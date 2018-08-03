@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
   <link rel="stylesheet" type="text/css" href="css/app.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script defer src="https://unpkg.com/vue/dist/vue.js"></script>
   <script defer src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script defer src="app/components/home.js"></script>
@@ -19,16 +18,18 @@
   <div id="app" class="container">
     <header>
       <div class="header">
-          <p>App de pruebas con NodeJS y MySQL</p>
+          <div class="header-logo">Logo</div>
+          <div>App de pruebas con NodeJS y MySQL</div>
       </div>
     </header>
     <nav>
-      <div class="nav" id="mynav">
-        <div class="active"><router-link class="nav-item" to="/">inicio</router-link></div>
-        <div><router-link class="nav-item" to="/listas">listas</router-link></div>
-        <div><router-link class="nav-item" to="/login">login</router-link></div>
-        <div href="javascript:void(0);" class="icon" onclick="myFunction()">
-          <i class="fa fa-bars"></i>
+      <div class="nav" id="navegacion">
+        <div class="nav-logo">Logo</div>
+        <div class="nav-item" v-on:click="menu('/')">inicio</div>
+        <div class="nav-item" v-on:click="menu('listas')">listas</div>
+        <div class="nav-item" v-on:click="menu('login')">login</div>
+        <div v-on:click="menu('icon')" href="javascript:void(0);" class="icon">
+          <i><img src="img/icons8-menu-16.png"></i>
         </div>
       </div>
     </nav>

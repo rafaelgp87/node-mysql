@@ -9,12 +9,38 @@ const listas = Vue.component('listas', {
           </option>
         </select>
       </div>
+      <ul>
+        <li v-for="i in items">{{i.text}}</li>
+      </ul>
     </div>
   `,
-  data: function() {
+  data: function () {
     return {
       lista: '',
-      listas: []
+      listas: [],
+      items: []
+    }
+  },
+  computed: {
+  	filteredItems () {
+    	let posts = this.items
+
+      if(this.lista) {
+        console.log('entro')
+      	posts = posts.filter((p) => {
+					let foundCategory = p.id_lista.findIndex((c) => {
+          	return c.slug === this.filterCategory
+          })
+          return foundCategory !== -1
+        })
+      }
+
+      return posts
+    }
+  },
+  methods: {
+    selectList: function () {
+      console.log('entro')
     }
   },
   // Antes de renderear el template
@@ -31,12 +57,21 @@ const listas = Vue.component('listas', {
     }).then(
       res => res.json()
     ).then(response => {
-      that = this;
+      var that = this;
       if (response) {
 
         response.forEach(function(e) {
-          //console.log(e);
-          that.listas.push({ text: e.nombre, value: e.id },);
+
+          var index = that.listas.findIndex(x => x.value == e.id_lista)
+
+          if (index === -1){
+            that.listas.push({ text: e.nombre_lista, value: e.id_lista},);
+          }
+
+          if (e.id_item) {
+            that.items.push({ lista: e.id_lista, text: e.nombre_item, value: e.id_item, descripcion: e.descripcion, url: e.url},);
+          }
+
         });
       }
 

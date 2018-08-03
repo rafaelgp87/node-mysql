@@ -15,14 +15,20 @@ const router = new VueRouter({
 
 const app = new Vue({
   el: '#app',
+  methods: {
+    menu: function (opcion) {
+
+      if (opcion != 'icon' && opcion != 'vacio') {
+        router.push(opcion)
+      }
+
+      var x = document.getElementById("navegacion");
+      if (x.className === "nav") {
+          x.className += " responsive";
+      } else {
+          x.className = "nav";
+      }
+    }
+  },
   router
 });
-
-function myFunction() {
-  var x = document.getElementById("mynav");
-  if (x.className === "nav") {
-      x.className += " responsive";
-  } else {
-      x.className = "nav";
-  }
-}
