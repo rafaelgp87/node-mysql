@@ -10,7 +10,7 @@ const login = Vue.component('login', {
           <span class="mensaje"> {{loginMensaje}} </span>
         </div>
         <div>
-          <input v-model="emailLogin" placeholder="Usuario" type="text" />
+          <input v-model="emailLogin" placeholder="Usuario" type="email" />
         </div>
         <div>
           <input v-model="passLogin" placeholder="Contraseña" type="password" />
@@ -106,18 +106,18 @@ const login = Vue.component('login', {
           }
         }).then(
           res => res.json()
-        ).then(response => {
+        ).then(data => {
 
-          if (response) {
-            //console.log('Success:', response)
+          if (data) {
+            console.log('Success:', data)
 
-            if (response.mensaje == 'Datos incorrectos') {
-              this.loginError = response.mensaje
+            if (data.mensaje == 'Datos incorrectos') {
+              this.loginError = data.mensaje
 
             } else {
 
-              localStorage.setItem('userId', response.id)
-              localStorage.setItem('userEmail', response.email)
+              localStorage.setItem('userId', data.id)
+              localStorage.setItem('userEmail', data.email)
             }
           }
 

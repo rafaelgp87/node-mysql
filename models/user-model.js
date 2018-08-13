@@ -1,13 +1,31 @@
 'use strict'
 
-const conn = require('./model.js')
+const mysql = require('mysql')
+const conf = require ('./db-conf.json')
+
+const dbListas = {
+  host : conf.listas.host,
+  user : conf.listas.user,
+  password : conf.listas.pass,
+  port : conf.listas.port,
+  database : conf.listas.db
+}
+
+const conn = mysql.createConnection(dbListas)
+
+conn.connect((err) => {
+  return(err)
+    ? console.log(`Error al conectarse a MySQL base usuarios: ${err.stack}`)
+    : console.log(`Conexión establecida con MySQL base usuarios N°: ${conn.threadId}`)
+})
+
 
 class UserModel {
 
   getUserById(values, callBack) {
 
     let query = `
-      select * from proyecto.usuarios where id = UUID_TO_BIN(?);
+      select * from usuarios.usuarios where id = UUID_TO_BIN(?);
     `
 
     conn.query(query, values, callBack)
@@ -17,7 +35,7 @@ class UserModel {
 
     let query = `
       select BIN_TO_UUID(id) as id
-        from proyecto.usuarios
+        from usuarios.usuarios
        where email = ?
     `
 
@@ -28,7 +46,7 @@ class UserModel {
 
     let query = `
       select referencia
-        from proyecto.usuarios
+        from usuarios.usuarios
        where email = ?
     `
 
@@ -49,7 +67,7 @@ class UserModel {
              fecha_nacimiento,
              foto,
              token
-        from proyecto.usuarios
+        from usuarios.usuarios
        where email = ?
     `
 
@@ -70,7 +88,7 @@ class UserModel {
              fecha_nacimiento,
              foto,
              token
-        from proyecto.usuarios
+        from usuarios.usuarios
        where email = ?
          and referencia = ?;
     `
@@ -92,7 +110,7 @@ class UserModel {
              fecha_nacimiento,
              foto,
              token
-        from proyecto.usuarios
+        from usuarios.usuarios
        where email = ?
          and referencia = ?;
          and activo = 1;
@@ -104,7 +122,7 @@ class UserModel {
   insertUser(values, callBack) {
 
     let query = `
-      insert into proyecto.usuarios
+      insert into usuarios.usuarios
       (id, fecha_registro, email, usuario, referencia, nombres, apellidos, genero, fecha_nacimiento, foto, token, activo)
       values
       (UUID_TO_BIN(UUID()), now(), ?, null, ?, ?, ?, ?, ?, null, null, false);
@@ -118,7 +136,7 @@ class UserModel {
   updateUserActiveById(values, callBack) {
 
     let query = `
-      update proyecto.usuarios set activo = true where id = UUID_TO_BIN(?);
+      update usuarios.usuarios set activo = true where id = UUID_TO_BIN(?);
     `
     conn.query(query, values, callBack)
   }

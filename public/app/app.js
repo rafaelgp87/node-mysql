@@ -19,14 +19,14 @@ const app = new Vue({
     menu: function (opcion) {
 
       if (opcion != 'icon' && opcion != 'vacio') {
-        router.push(opcion)
+        window.location.hash = '#' + opcion
       }
 
-      var x = document.getElementById("navegacion");
-      if (x.className === "nav") {
-          x.className += " responsive";
+      var x = document.getElementById('navegacion')
+      if (x.className === 'nav') {
+          x.className += ' responsive'
       } else {
-          x.className = "nav";
+          x.className = 'nav'
       }
     }
   },

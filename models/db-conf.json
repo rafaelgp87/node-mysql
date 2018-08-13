@@ -1,9 +1,16 @@
 {
-  "mysql" : {
+  "usuarios" : {
     "host" : "localhost",
     "port" : 3306,
     "user" : "root",
     "pass" : "Cisco289",
-    "db" : "proyecto"
+    "db" : "usuarios"
+  },
+  "listas" : {
+    "host" : "localhost",
+    "port" : 3306,
+    "user" : "root",
+    "pass" : "Cisco289",
+    "db" : "listas"
   }
 }
