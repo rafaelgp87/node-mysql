@@ -78,6 +78,7 @@ const listas = Vue.component('listas', {
       modal.style.display = 'none'
     }
   },
+  // Después de renderear el template
   mounted: function(){
     let modal = document.getElementById('myModal')
 

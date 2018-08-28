@@ -15,10 +15,11 @@ const router = new VueRouter({
 
 const app = new Vue({
   el: '#app',
-  methods: {
-    menu: function (opcion) {
-      window.location.href = opcion
-    }
+  mounted: function(){
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems, null);
+    });
   },
   router
 });

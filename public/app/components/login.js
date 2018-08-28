@@ -2,69 +2,86 @@
 
 const login = Vue.component('login', {
   template:`
-    <div class="formularios">
-      <div class="formulario">
+    <div class="component-login">
+      <div class="row">
         <div>
-          <p>Iniciar Sesión</p>
-          <span class="error"> {{loginError}} </span>
-          <span class="mensaje"> {{loginMensaje}} </span>
+          <p class="flow-text">Iniciar Sesión</p>
         </div>
-        <div>
-          <input v-model="emailLogin" placeholder="Usuario" type="email" />
+        <div class="row">
+          <div class="input-field col s12">
+            <input v-model="emailLogin" id="emailLogin" type="email" class="validate">
+            <label for="emailLogin" class="white-text">email</label>
+          </div>
         </div>
-        <div>
-          <input v-model="passLogin" placeholder="Contraseña" type="password" />
+        <div class="row">
+          <div class="input-field col s12">
+            <input v-model="passLogin" id="passLogin" type="password" class="validate">
+            <label for="passLogin" class="white-text">Contraseña</label>
+          </div>
         </div>
-        <div class="button" v-on:click="loginEmail">Entrar</div>
-        <div class="button" v-on:click="reenviarPassword">¿Reenviar Contraseña?</div>
+        <div class="row">
+          <p class="flow-text"><i class="material-icons left">{{loginMensajeIcon}}</i>{{loginMensaje}}</p>
+        </div>
+        <div class="row">
+          <button v-on:click="loginEmail" class="btn waves-effect waves-light">
+            login
+            <i class="material-icons right">done</i>
+          </button>
+          <button v-on:click="reenviarPassword" class="btn waves-effect waves-light">
+            ¿Reenviar Contraseña?
+            <i class="material-icons right">send</i>
+          </button>
+        </div>
       </div>
 
-      <div class="formulario">
-        <div>
-          <p>Registrarse</p>
+      <div class="row">
+        <div class="row">
+          <p class="flow-text">Registrarse</p>
           <p class="error"> {{registroError}} </p>
           <p class="mensaje"> {{registroMensaje}} </p>
         </div>
-        <div>
+        <div class="row">
           <input v-model="emailRegistro" placeholder="email" type="text" required="required" />
         </div>
-        <div>
+        <div class="row">
           <input v-model="pass1" placeholder="Contraseña" type="password" required="required" />
         </div>
-        <div>
+        <div class="row">
           <input v-model="pass2" placeholder="Verificar contraseña" type="password" required="required" />
         </div>
-        <div>
+        <div class="row">
           <p>Datos no necesarios:</p>
         </div>
-        <div>
+        <div class="row">
           <input v-model="nombres" placeholder="Nombres" type="text" />
         </div>
-        <div>
+        <div class="row">
           <input v-model="apellidos" placeholder="Apellidos" type="text" />
         </div>
-        <div>
+        <div class="row">
           <p>Genero:</p>
         </div>
-        <div>
+        <div class="row">
           <select v-model="genero">
             <option v-for="g in generos" v-bind:value="g.value">
               {{ g.text }}
             </option>
           </select>
         </div>
-        <div>
+        <div class="row">
           <p>Fecha de nacimiento:</p>
         </div>
-        <div><input v-model="fechaNacimiento" placeholder="Fecha de nacimiento" type="date" /></div>
+        <div>
+          <input v-model="fechaNacimiento" type="text" class="datepicker">
+        </div>
         <div class="button" v-on:click="registrarse">Registrarse</div>
       </div>
     </div>
   `,
   data: function() {
     return {
-      loginError: '',
       loginMensaje: '',
+      loginMensajeIcon: '',
       emailLogin: '',
       passLogin: '',
       registroError: '',
@@ -89,11 +106,19 @@ const login = Vue.component('login', {
     loginEmail: function () {
 
       if (/\S+@\S+\.\S+/.test(this.emailLogin) != true) {
-        this.loginError = 'El formato de email no es correcto'
+        var mensaje = 'El formato de email no es correcto';
+        this.loginMensajeIcon = 'error_outline';
+        this.loginMensaje = mensaje;
+        var toast = `<span>${mensaje}</span>`;
+        M.toast({html: toast, classes: 'rounded'});
       } else if (this.emailLogin == '' || this.passLogin == '') {
-        this.loginError  = 'Todos los campos son necesarios'
+        var mensaje = 'Todos los campos son necesarios';
+        this.loginMensaje = mensaje;
+        var toast = `<span>${mensaje}</span>`;
+        M.toast({html: toast, classes: 'rounded'});
       } else {
-        this.loginError = ''
+        this.loginMensaje = ''
+        this.loginMensajeIcon = ''
 
         fetch('/login-user', {
           method: 'POST',
@@ -112,8 +137,9 @@ const login = Vue.component('login', {
             console.log('Success:', data)
 
             if (data.mensaje == 'Datos incorrectos') {
-              this.loginError = data.mensaje
-
+              this.loginMensaje = data.mensaje
+              var toast = `<span>${data.mensaje}</span>`;
+              M.toast({html: toast, classes: 'rounded'});
             } else {
 
               localStorage.setItem('userId', data.id)
@@ -123,7 +149,10 @@ const login = Vue.component('login', {
 
         }).catch(error => {
           if (error) {
-            this.loginError = 'No hay acceso al sistema, contacte al administrador'
+            var mensaje = 'No hay acceso al sistema, contacte al administrador';
+            this.loginMensaje = mensaje;
+            var toast = `<span>${mensaje}</span>`;
+            M.toast({html: toast, classes: 'rounded'});
           }
         });
       }
@@ -179,9 +208,9 @@ const login = Vue.component('login', {
     reenviarPassword: function () {
 
       if (/\S+@\S+\.\S+/.test(this.emailLogin) != true) {
-        this.loginError = 'El formato de email no es correcto'
+        this.loginMensaje = 'El formato de email no es correcto'
       } else {
-        this.loginError = ''
+        this.loginMensaje = ''
 
         fetch('/reenviar-password', {
           method: 'POST',
@@ -201,17 +230,78 @@ const login = Vue.component('login', {
             Si no recibes ningún correo electrónico, por favor verifica que el correo electrónico sea el que corresponde a tu cuenta, también checa tu carpeta de spam.
             `
           } else {
-            this.loginError = 'Ocurrio un error al envíarle su contraseña, intentelo de nuevo más tarde'
+            this.loginMensaje = 'Ocurrio un error al envíarle su contraseña, intentelo de nuevo más tarde'
           }
 
         }).catch(error => {
           if (error) {
             console.log(error)
-            this.loginError = 'No hay acceso al sistema, contacte al administrador'
+            this.loginMensaje = 'No hay acceso al sistema, contacte al administrador'
           }
         });
       }
     }
+  },
+  // Después de renderear el template
+  mounted: function () {
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.datepicker');
+      var options = {
+        class: 'blue-text text-darken-2',
+        format: 'dd mmmm, yyyy',
+        i18n:{
+          cancel:	'Cancelar',
+          months: [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+          ],
+          monthsShort: [
+            'Ene',
+            'Feb',
+            'Mar',
+            'Abr',
+            'Mar',
+            'Jun',
+            'Jul',
+            'Ago',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dic'
+          ],
+          weekdays: [
+            'Domingo',
+            'Lunes',
+            'Martes',
+            'Miércoles',
+            'Jueves',
+            'Viernes',
+            'Sábado'
+          ],
+          weekdaysShort: [
+            'Dom',
+            'Lun',
+            'Mar',
+            'Mié',
+            'Jue',
+            'Vie',
+            'Sáb'
+          ],
+          weekdaysAbbrev: ['S','L','M','M','J','V','S']
+        }
+      }
+      var instances = M.Datepicker.init(elems, options);
+    });
   },
   // Antes de renderear el template
   created: function () {
