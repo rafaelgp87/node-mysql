@@ -2,7 +2,7 @@ const listas = Vue.component('listas', {
   template:`
     <div class="component-listas">
       <p class="select-listas">
-        Lista 
+        Lista
         <select v-model="lista">
           <option v-for="l in listas" v-bind:value="l.value">
             {{ l.text }}
@@ -28,11 +28,15 @@ const listas = Vue.component('listas', {
       <div id="myModal" class="modal">
         <div class="modal-content">
           <span v-on:click="cerrarModalLista" class="close">&times;</span>
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
-          <p>4</p>
-          <p>5</p>
+          <form action="/add-list" method="POST">
+            First name:<br>
+            <input type="text" name="firstname" value="Mickey">
+            <br>
+            Last name:<br>
+            <input type="text" name="lastname" value="Mouse">
+            <br><br>
+            <input type="submit" value="Agregar lista">
+          </form>
         </div>
       </div>
     </div>
@@ -108,7 +112,7 @@ const listas = Vue.component('listas', {
       var that = this;
       if (data) {
         var e, i;
-        for (i = 0; i < data.length; i++) { 
+        for (i = 0; i < data.length; i++) {
 
           e = data[i];
 

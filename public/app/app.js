@@ -9,7 +9,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  //mode: 'history',
+  mode: 'history',
   routes: routes
 });
 
@@ -17,17 +17,7 @@ const app = new Vue({
   el: '#app',
   methods: {
     menu: function (opcion) {
-
-      if (opcion != 'icon' && opcion != 'vacio') {
-        window.location.hash = '#' + opcion
-      }
-
-      var x = document.getElementById('navegacion')
-      if (x.className === 'nav') {
-          x.className += ' responsive'
-      } else {
-          x.className = 'nav'
-      }
+      window.location.href = opcion
     }
   },
   router

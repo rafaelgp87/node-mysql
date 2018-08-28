@@ -6,7 +6,7 @@ Location: México City, México
 
 
 /* SITE */
-Last update: 2018/01/18
+Last update: 2018/08/27
 Standards: HTML5, CSS3, JS
-Components: Node JS, Express, Pug, MySql
+Components: NodeJS, Express, MySql, VueJS
 Software: Visual Studio Code, Chrome, Windows 8, MacOS

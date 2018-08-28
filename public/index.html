@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" href="css/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="app/app.css" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
   <script defer src="https://unpkg.com/vue/dist/vue.js"></script>
   <script defer src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script defer src="app/components/home.js"></script>
@@ -15,31 +17,36 @@
   <script defer src="app/app.js"></script>
 </head>
 <body>
-  <div id="app" class="container">
-    <header>
-      <div class="header">
-          <div class="header-logo">Logo</div>
-          <div>App de pruebas con NodeJS y MySQL</div>
-      </div>
-    </header>
-    <nav>
-      <div class="nav" id="navegacion">
-        <div class="nav-logo">Logo</div>
-        <div class="nav-item" v-on:click="menu('/')">inicio</div>
-        <div class="nav-item" v-on:click="menu('/listas')">listas</div>
-        <div class="nav-item" v-on:click="menu('/login')">login</div>
-        <div v-on:click="menu('icon')" href="javascript:void(0);" class="icon">
-          <i><img src="img/icons8-menu-16.png"></i>
-        </div>
-      </div>
-    </nav>
-    <router-view class="main"></router-view>
-    <aside></aside>
-    <footer>
-      <div class="footer">
-          <p>rafaelgp87</p>
-      </div>
-    </footer>
-  </div>
+	<div id="app">
+		<header>
+			<div class="row">
+				<div class="col s0 l12">
+					<div class="header-logo">Logo</div>
+					<div>App de pruebas con NodeJS y MySQL</div>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col s0 l2">
+					<nav>
+						<button v-on:click="menu('/')">inicio</button>
+						<button v-on:click="menu('/listas')">listas</button>
+						<button v-on:click="menu('/login')">login</button>
+					</nav>
+				</div>
+				<div class="col s0 l10">
+					<router-view></router-view>
+				</div>
+			</div>
+		</main>
+		<footer class="page-footer">
+			<div class="footer row s12 l12">
+				<div class="container">
+						<p>rafaelgp87</p>
+				</div>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>
