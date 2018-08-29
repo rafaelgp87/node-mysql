@@ -4,6 +4,7 @@ const routes = [
   { path: '/home', redirect: '/' },
   //{ path: '/listas', component: list },
   { path: '/login', component: login },
+  { path: '/registrarse', component: registerUser },
   { path: '/activar-cuenta/:id', component: activarCuenta },
   { path: '/listas', component: listas },
 ];

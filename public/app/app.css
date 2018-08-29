@@ -18,3 +18,7 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+.component-login, .component-register-user {
+  text-align: center;
+}
